@@ -10,6 +10,7 @@ interface State {
   isFocused: boolean
   width: number
   height: number
+  prevWidth: number
 }
 
 /**
@@ -17,7 +18,34 @@ interface State {
  * automatically when your component should be re-rendered.
  */
 class MyComponent extends StreamlitComponentBase<State> {
-  public state = { numClicks: 0, isFocused: false, width: window.innerWidth, height: window.innerHeight };
+  public state = { numClicks: 0, isFocused: false, width: window.innerWidth, height: window.innerHeight, prevWidth: this.props.width };
+
+  //   () => {
+  //   let timeout: ReturnType<typeof setTimeout>;;
+  //   const handleResize = () => {
+  //     clearTimeout(timeout);
+
+  //     setWindowResizing(true);
+
+  //     timeout = setTimeout(() => {
+  //       setWindowResizing(false);
+  //     }, 200);
+  //   }
+  //   window.addEventListener("resize", handleResize);
+
+  //   return () => window.removeEventListener("resize", handleResize);
+  // }, []);
+
+  // onChange(event) {
+  //   const { target } = event;
+  //   const { value } = target;
+
+  //   if (hasNumbers(value)) {
+  //     target.value = numbersToText(value);
+
+  //     this.childrenOnChange(event);
+  //   }
+  // }
 
   updateDimensions = () => {
     this.setState({ width: window.innerWidth, height: window.innerHeight });
@@ -73,7 +101,7 @@ class MyComponent extends StreamlitComponentBase<State> {
     // Streamlit via `Streamlit.setComponentValue`.
     this.setState(
       prevState => ({ numClicks: prevState.numClicks + 1 }),
-      () => Streamlit.setComponentValue({clicks: this.state.numClicks, innerHeight: window.innerWidth, width: this.props.width})
+      () => Streamlit.setComponentValue({clicks: this.state.numClicks, innerHeight: window.innerHeight, width: this.props.width})
     )
   }
 
@@ -87,12 +115,24 @@ class MyComponent extends StreamlitComponentBase<State> {
     this.setState({ isFocused: false })
   }
 
-  // componentDidMount() {
-  //   window.addEventListener('resize', this.updateDimensions);
-  // }
-  componentWillUnmount() {
-    window.removeEventListener('resize', this.updateDimensions);
+  componentDidMount() {
+    // window.addEventListener('resize', this.updateDimensions);
+
+    Streamlit.setComponentValue({width: this.props.width})
   }
+
+  componentDidUpdate() {
+    // window.addEventListener('resize', this.updateDimensions);
+
+    if (this.state.width !== this.props.width) {
+      Streamlit.setComponentValue({width: this.props.width})
+      this.setState({ width: this.props.width })
+    }
+  }
+
+  // componentWillUnmount() {
+  //   window.removeEventListener('resize', this.updateDimensions);
+  // }
 }
 
 // "withStreamlitConnection" is a wrapper function. It bootstraps the
