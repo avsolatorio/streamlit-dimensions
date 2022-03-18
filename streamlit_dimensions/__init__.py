@@ -21,4 +21,11 @@ def st_dimensions(key=None):
 if not _RELEASE:
     import streamlit as st
 
-    st.write(st_dimensions())
+    st.set_page_config(layout="wide")
+
+    st.title("Main Dimensions")
+    st.write(st_dimensions(key="main"))
+
+    with st.sidebar:
+        st.title("Sidebar Dimensions")
+        st.write(st_dimensions(key="sidebar"))
