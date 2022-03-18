@@ -16,7 +16,6 @@ import {
 
 const StreamlitDimensions = (props: ComponentProps) => {
   const [prevWidth, setprevWidth] = useState(0);
-  console.log(props.width, prevWidth)
 
   useEffect(() => {
 
