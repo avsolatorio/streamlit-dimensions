@@ -1,9 +1,14 @@
 import {
+  // ComponentProps,
   Streamlit,
   StreamlitComponentBase,
   withStreamlitConnection,
 } from "streamlit-component-lib"
-import React, { ReactNode } from "react"
+import React, { 
+  ReactNode, 
+  // useEffect, useState 
+} from "react"
+// import { ScriptElementKindModifier } from "typescript";
 
 interface State {
   numClicks: number
@@ -17,6 +22,63 @@ interface State {
  * This is a React-based component template. The `render()` function is called
  * automatically when your component should be re-rendered.
  */
+
+
+// const StreamlitDimensions = (props: ComponentProps) => {
+//   const [prevWidth, setprevWidth] = useState(0);
+//   // const [skips, setSkips] = useState(0);
+
+//   // // const getAbsDelta = (width: number) => {
+//   // //   return Math.abs(width - prevWidth);
+//   // // }
+//   console.log(props.width, prevWidth) //, skips)
+
+//   useEffect(() => {
+
+//     if (props.width !== prevWidth) {
+//       Streamlit.setComponentValue({width: props.width})
+//       setprevWidth(props.width);
+//       // if (Math.abs(props.width - prevWidth) > 10) {
+//       //   Streamlit.setComponentValue({width: props.width})
+//       //   setprevWidth(props.width);
+//       //   setSkips(0);
+//       // } else {
+//       //   setSkips(skips + 1);
+//       // }
+//     }
+//     //  else {
+//     //     if (skips > 100) {
+//     //       Streamlit.setComponentValue({width: props.width})
+//     //       setprevWidth(props.width);
+//     //       setSkips(0);
+//     //   }
+//     // }
+
+//     // let timeout: ReturnType<typeof setTimeout>;
+//     // const handleResize = () => {
+//     //   clearTimeout(timeout);
+//     //   timeout = setTimeout(() => {
+//     //       Streamlit.setComponentValue({width: props.width})
+//     //   }, 1000);
+//     // }
+//     // // handleResize();
+//     // window.addEventListener("resize", handleResize);
+
+//     // return () => {
+//     //   window.removeEventListener("resize", handleResize);
+//     // }
+//   })
+
+//   // useEffect(() => {
+//   //   getAbsDelta(props.width) > 10 && Streamlit.setComponentValue({width: props.width}) && setPrevWidth(props.width)
+//   // }, [getAbsDelta, props.width])
+
+
+//   return <h1>Hello world</h1>;
+// }
+
+// export default withStreamlitConnection(StreamlitDimensions);
+
 class MyComponent extends StreamlitComponentBase<State> {
   public state = { numClicks: 0, isFocused: false, width: window.innerWidth, height: window.innerHeight, prevWidth: this.props.width };
 
